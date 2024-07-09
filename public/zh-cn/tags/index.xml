@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on Kotetsu&#39;s tech blog</title>
+    <link>http://localhost:1313/zh-cn/tags/</link>
+    <description>Recent content in Tags on Kotetsu&#39;s tech blog</description>
+    <generator>Hugo</generator>
+    <language>zh-CN</language>
+    <managingEditor>user@example.com (Xiaoliang Wang)</managingEditor>
+    <webMaster>user@example.com (Xiaoliang Wang)</webMaster>
+    <copyright>(c) 2024 Kotetsu0000</copyright>
+    <lastBuildDate>Fri, 01 Dec 2023 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/zh-cn/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Custom</title>
+      <link>http://localhost:1313/zh-cn/tags/custom/</link>
+      <pubDate>Fri, 01 Dec 2023 00:00:00 +0000</pubDate><author>user@example.com (Xiaoliang Wang)</author>
+      <guid>http://localhost:1313/zh-cn/tags/custom/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Css</title>
+      <link>http://localhost:1313/zh-cn/tags/css/</link>
+      <pubDate>Mon, 11 Mar 2019 00:00:00 +0000</pubDate><author>user@example.com (Xiaoliang Wang)</author>
+      <guid>http://localhost:1313/zh-cn/tags/css/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Html</title>
+      <link>http://localhost:1313/zh-cn/tags/html/</link>
+      <pubDate>Mon, 11 Mar 2019 00:00:00 +0000</pubDate><author>user@example.com (Xiaoliang Wang)</author>
+      <guid>http://localhost:1313/zh-cn/tags/html/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Markdown</title>
+      <link>http://localhost:1313/zh-cn/tags/markdown/</link>
+      <pubDate>Mon, 11 Mar 2019 00:00:00 +0000</pubDate><author>user@example.com (Xiaoliang Wang)</author>
+      <guid>http://localhost:1313/zh-cn/tags/markdown/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Tag1</title>
+      <link>http://localhost:1313/zh-cn/tags/tag1/</link>
+      <pubDate>Mon, 11 Mar 2019 00:00:00 +0000</pubDate><author>user@example.com (Xiaoliang Wang)</author>
+      <guid>http://localhost:1313/zh-cn/tags/tag1/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Tag2</title>
+      <link>http://localhost:1313/zh-cn/tags/tag2/</link>
+      <pubDate>Mon, 11 Mar 2019 00:00:00 +0000</pubDate><author>user@example.com (Xiaoliang Wang)</author>
+      <guid>http://localhost:1313/zh-cn/tags/tag2/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Privacy</title>
+      <link>http://localhost:1313/zh-cn/tags/privacy/</link>
+      <pubDate>Sun, 10 Mar 2019 00:00:00 +0000</pubDate><author>user@example.com (Xiaoliang Wang)</author>
+      <guid>http://localhost:1313/zh-cn/tags/privacy/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Shortcodes</title>
+      <link>http://localhost:1313/zh-cn/tags/shortcodes/</link>
+      <pubDate>Sun, 10 Mar 2019 00:00:00 +0000</pubDate><author>user@example.com (Xiaoliang Wang)</author>
+      <guid>http://localhost:1313/zh-cn/tags/shortcodes/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Emoji</title>
+      <link>http://localhost:1313/zh-cn/tags/emoji/</link>
+      <pubDate>Tue, 05 Mar 2019 00:00:00 +0000</pubDate><author>user@example.com (Xiaoliang Wang)</author>
+      <guid>http://localhost:1313/zh-cn/tags/emoji/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <title>【Python】NWG細線化を実装してみた :: Kotetsu&#39;s tech blog - Example site for hugo-theme-tailwind</title>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta
+  name="description"
+  content="細線化アルゴリズムはいくつかあり、「Zhang-Suen法」や「田村法」等ある。「Zhang-Suen法」についてはPythonでの実装例が見つかったが、NWG法は実装例がなかったため、実装することにした。(もしかしたらどこかのライブラリで既に実装されているかもしれないが)
+NWG細線化とは？ NWG法とは Nagendraprasad-Wang-Guptaの細線化アルゴリズムのことで、細線化アルゴリズムの一つである。(参考: A note on the Nagendraprasad-Wang-Gupta thinning algorithm )
+アルゴリズム詳細 NWG法のCythonによる高速化 8月頃にNWG法を簡易的に高速化した。その際にもう少し高速化ができる余地が残されているという話をしたが、その作業を行った。
+NWG法について NWG法とは Nagendraprasad-Wang-Guptaの細線化アルゴリズムのことで、細線化アルゴリズムの一つである。疑似コードは次のようになる。
+アルゴリズム1 入力:
+二値画像Q (1は黒画素、0は白画素を表す) 出力:
+細線化された二値画像Q 処理手順:
+変数g, hを1で初期化する。二値画像QのコピーをQ&amp;rsquo;とする。 hが1である間、以下の処理を繰り返す。 hを0にする。 gの値を反転させる (1 -&amp;gt; 0, 0 -&amp;gt; 1)。 Q&amp;rsquo;の内容をQにコピーする。 Q内の全ての画素pについて、以下の処理を行う。 pの8近傍の画素値に基づいて、b(p), a(p), c(p), e(p), f(p)を計算する (詳細は後述)。 もし1 &amp;lt; b(p) &amp;lt; 7 かつ (a(p) = 1 もしくは c(p) = 1) ならば、以下の処理を行う。 g = 0 かつ e(p) = 0 ならば、Q&amp;rsquo;内の画素pを白画素(0)にする。 g = 1 かつ f(p) = 0 ならば、Q&amp;rsquo;内の画素pを白画素(0)にする。 細線化処理が完了したので、Qを返す。 各変数の意味:"
+/>
+<meta
+  name="keywords"
+  content="hugo, tailwind, tailwindcss, hugo theme, hugo theme tailwind"
+/>
+<meta name="robots" content="noodp" />
+<meta property="og:url" content="http://localhost:1313/post/nagendraprasad_wang_gupta_thinning_algorithm_python/">
+  <meta property="og:site_name" content="Kotetsu&#39;s tech blog">
+  <meta property="og:title" content="【Python】NWG細線化を実装してみた">
+  <meta property="og:description" content="細線化アルゴリズムはいくつかあり、「Zhang-Suen法」や「田村法」等ある。「Zhang-Suen法」についてはPythonでの実装例が見つかったが、NWG法は実装例がなかったため、実装することにした。">
+  <meta property="og:locale" content="ja">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="post">
+    <meta property="article:published_time" content="2024-07-07T03:46:53+09:00">
+    <meta property="article:modified_time" content="2024-07-07T03:46:53+09:00">
+
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="【Python】NWG細線化を実装してみた">
+  <meta name="twitter:description" content="細線化アルゴリズムはいくつかあり、「Zhang-Suen法」や「田村法」等ある。「Zhang-Suen法」についてはPythonでの実装例が見つかったが、NWG法は実装例がなかったため、実装することにした。">
+
+
+<link rel="canonical" href="http://localhost:1313/post/nagendraprasad_wang_gupta_thinning_algorithm_python/" />
+
+<link rel="shortcut icon" href="/images/favicon.ico" />
+<link rel="stylesheet" href="/css/index.4573e47dcfff49700db206601116cd2f48db1912c244b1d0b312713d4ca4a32e.css">
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Article","author":{"@type":"Person","name":"Kotetsu0000"},"dateModified":"2024-07-07T03:46:53+09:00","datePublished":"2024-07-07T03:46:53+09:00","description":"細線化アルゴリズムはいくつかあり、「Zhang-Suen法」や「田村法」等ある。「Zhang-Suen法」についてはPythonでの実装例が見つかったが、NWG法は実装例がなかったため、実装することにした。(もしかしたらどこかのライブラリで既に実装されているかもしれないが)\nNWG細線化とは？ NWG法とは Nagendraprasad-Wang-Guptaの細線化アルゴリズムのことで、細線化アルゴリズムの一つである。(参考: A note on the Nagendraprasad-Wang-Gupta thinning algorithm )\nアルゴリズム詳細 NWG法のCythonによる高速化 8月頃にNWG法を簡易的に高速化した。その際にもう少し高速化ができる余地が残されているという話をしたが、その作業を行った。\nNWG法について NWG法とは Nagendraprasad-Wang-Guptaの細線化アルゴリズムのことで、細線化アルゴリズムの一つである。疑似コードは次のようになる。\nアルゴリズム1 入力:\n二値画像Q (1は黒画素、0は白画素を表す) 出力:\n細線化された二値画像Q 処理手順:\n変数g, hを1で初期化する。二値画像QのコピーをQ\u0026rsquo;とする。 hが1である間、以下の処理を繰り返す。 hを0にする。 gの値を反転させる (1 -\u0026gt; 0, 0 -\u0026gt; 1)。 Q\u0026rsquo;の内容をQにコピーする。 Q内の全ての画素pについて、以下の処理を行う。 pの8近傍の画素値に基づいて、b(p), a(p), c(p), e(p), f(p)を計算する (詳細は後述)。 もし1 \u0026lt; b(p) \u0026lt; 7 かつ (a(p) = 1 もしくは c(p) = 1) ならば、以下の処理を行う。 g = 0 かつ e(p) = 0 ならば、Q\u0026rsquo;内の画素pを白画素(0)にする。 g = 1 かつ f(p) = 0 ならば、Q\u0026rsquo;内の画素pを白画素(0)にする。 細線化処理が完了したので、Qを返す。 各変数の意味:","name":"【Python】NWG細線化を実装してみた","url":"http://localhost:1313/post/nagendraprasad_wang_gupta_thinning_algorithm_python/"}
+</script>
+
+  
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<script>
+  MathJax = {
+    tex: {
+      displayMath: [['\\[', '\\]'], ['$$', '$$']],  
+      inlineMath: [['\\(', '\\)'], ['$', '$']]                  
+    }
+  };
+</script>
+  
+</head>
+<body class="flex flex-col min-h-screen w-full bg-slate-50 dark:bg-gray-800">
+    
+<div class="fixed right-0 top-0 z-50 flex items-center justify-center bg-gray-200 p-2 text-sm uppercase text-black sm:bg-red-200 md:bg-yellow-200 lg:bg-green-200 xl:bg-blue-200 2xl:bg-pink-200">
+  <span class="block sm:hidden">all</span>
+  <span class="hidden sm:block md:hidden">sm</span>
+  <span class="hidden md:block lg:hidden">md</span>
+  <span class="hidden lg:block xl:hidden">lg</span>
+  <span class="hidden xl:block 2xl:hidden">xl</span>
+  <span class="hidden 2xl:block">2xl</span>
+</div>
+
+  <header class="flex flex-none justify-center z-10">
+    <div class="flex flex-row gap justify-between w-full max-w-4xl lg:max-w-5xl h-12 mt-3">
+  <div class="flex-none ml-2 md:ml-0">
+    <a href="/" class="">
+      <img class="h-12 w-12 rounded-full object-cover bg-gray-100" src="/logo_icon.svg" alt="logo">
+    </a>
+  </div>
+  <div class="flex-1"></div>
+  <div class="flex-none">
+    
+
+
+
+
+  </div>
+  
+  <div class="flex-none mx-1"></div>
+  
+  <div class="flex-none md:hidden">
+    <a href=/search/ class="inline-flex items-center p-2 text-sm text-slate-800 dark:text-slate-200 rounded-lg" aria-controls="navbar-menu" aria-expanded="false">
+      <span class="sr-only"></span>
+      <i class="w-8 h-8">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+    <path d="M21 21l-6 -6" />
+</svg>
+
+      </i>
+    </a>
+  </div>
+  <div class="darkmode-toggle flex flex-none mr-2 md:mr-0">
+    <label for="darkmode-toggle" class="flex items-center px-3 cursor-pointer rounded-full bg-gray-100 dark:bg-gray-600" title="">
+      <input name="darkmode-toggle" id="darkmode-toggle" type="checkbox" class="sr-only peer" aria-label="">
+      <div class="group flex flex-row gap-1 justify-center h-8 px-1 rounded-full bg-white dark:bg-gray-700">
+        <i class="h-6 w-6 flex-none rounded-full bg-yellow-400 place-self-center peer-checked:group-[]:invisible">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brightness-down" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path>
+   <path d="M12 5l0 .01"></path>
+   <path d="M17 7l0 .01"></path>
+   <path d="M19 12l0 .01"></path>
+   <path d="M17 17l0 .01"></path>
+   <path d="M12 19l0 .01"></path>
+   <path d="M7 17l0 .01"></path>
+   <path d="M5 12l0 .01"></path>
+   <path d="M7 7l0 .01"></path>
+</svg>
+
+        </i>
+        <i class="h-6 w-6 flex-none rounded-full place-self-center invisible peer-checked:group-[]:visible">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-moon-stars" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z"></path>
+   <path d="M17 4a2 2 0 0 0 2 2a2 2 0 0 0 -2 2a2 2 0 0 0 -2 -2a2 2 0 0 0 2 -2"></path>
+   <path d="M19 11h2m-1 -1v2"></path>
+</svg>
+
+        </i>
+      </div>
+    </label>
+  </div>
+</div>
+
+  </header>
+  <main class="flex flex-auto justify-center">
+    
+<div class="w-full max-w-4xl lg:max-w-5xl">
+  <div class="flex flex-col mt-6 mx-2 md:mx-0 rounded-lg overflow-hidden shadow-md bg-white dark:bg-gray-700">
+    <div>
+      <a href="/post/nagendraprasad_wang_gupta_thinning_algorithm_python/">
+        
+      </a>
+    </div>
+    <div class="flex flex-col gap-y-3 p-6">
+      <h1 class="text-4xl font-semibold text-slate-800 dark:text-slate-100">
+        <a href="/post/nagendraprasad_wang_gupta_thinning_algorithm_python/">【Python】NWG細線化を実装してみた</a>
+      </h1>
+
+      
+      <h2 class="my-4 text-large text-slate-600 dark:text-slate-300">
+        細線化アルゴリズムはいくつかあり、「Zhang-Suen法」や「田村法」等ある。「Zhang-Suen法」についてはPythonでの実装例が見つかったが、NWG法は実装例がなかったため、実装することにした。
+      </h2>
+      
+      
+
+
+      <div class="flex flex-col gap-y-1 md:flex-row md:gap-y-0 md:gap-x-4 text-slate-500 dark:text-slate-300">
+  
+  
+  <div class="flex flex-row text-base gap-x-1">
+    <i class="h-6 w-6 flex-none">
+      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z"></path>
+   <path d="M16 3v4"></path>
+   <path d="M8 3v4"></path>
+   <path d="M4 11h16"></path>
+   <path d="M11 15h1"></path>
+   <path d="M12 15v3"></path>
+</svg>
+
+    </i>
+    <time datetime="2024-07-07T03:46:53&#43;09:00">
+      2024-07-07
+    </time>
+  </div>
+
+  <div class="flex flex-row text-base gap-x-1">
+    <i class="h-6 w-6 flex-none">
+      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hourglass-high" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M6.5 7h11"></path>
+   <path d="M6 20v-2a6 6 0 1 1 12 0v2a1 1 0 0 1 -1 1h-10a1 1 0 0 1 -1 -1z"></path>
+   <path d="M6 4v2a6 6 0 1 0 12 0v-2a1 1 0 0 0 -1 -1h-10a1 1 0 0 0 -1 1z"></path>
+</svg>
+
+    </i>
+    <span>
+      
+    </span>
+  </div>
+</div>
+
+
+      
+        
+        <section class="prose prose-slate dark:prose-invert w-full max-w-4xl lg:max-w-5xl mt-6">
+          <h2></h2>
+          <aside><nav id="TableOfContents">
+  <ul>
+    <li><a href="#nwg細線化とは">NWG細線化とは？</a>
+      <ul>
+        <li><a href="#アルゴリズム詳細">アルゴリズム詳細</a></li>
+      </ul>
+    </li>
+    <li><a href="#nwg法のcythonによる高速化">NWG法のCythonによる高速化</a>
+      <ul>
+        <li><a href="#nwg法について">NWG法について</a></li>
+        <li><a href="#pythonによるnwg法の実装">PythonによるNWG法の実装</a></li>
+      </ul>
+    </li>
+    <li><a href="#次回">次回</a></li>
+  </ul>
+</nav></aside>
+        </section>
+        
+      
+
+      <article class="mt-6 w-full max-w-4xl lg:max-w-5xl prose prose-slate dark:prose-invert prose-quoteless post-content">
+        <p>細線化アルゴリズムはいくつかあり、「Zhang-Suen法」や「田村法」等ある。「Zhang-Suen法」についてはPythonでの実装例が見つかったが、NWG法は実装例がなかったため、実装することにした。(もしかしたらどこかのライブラリで既に実装されているかもしれないが)</p>
+<h2 id="nwg細線化とは">NWG細線化とは？</h2>
+<p>NWG法とは Nagendraprasad-Wang-Guptaの細線化アルゴリズムのことで、細線化アルゴリズムの一つである。(参考: <a href="https://www.sciencedirect.com/science/article/pii/016786559500121V" target="_blank" rel="noopener">A note on the Nagendraprasad-Wang-Gupta thinning algorithm</a>
+)</p>
+<h3 id="アルゴリズム詳細">アルゴリズム詳細</h3>
+<h2 id="nwg法のcythonによる高速化">NWG法のCythonによる高速化</h2>
+<p>8月頃にNWG法を簡易的に高速化した。その際にもう少し高速化ができる余地が残されているという話をしたが、その作業を行った。</p>
+<h3 id="nwg法について">NWG法について</h3>
+<p>NWG法とは Nagendraprasad-Wang-Guptaの細線化アルゴリズムのことで、細線化アルゴリズムの一つである。疑似コードは次のようになる。</p>
+<h4 id="アルゴリズム1">アルゴリズム1</h4>
+<p><strong>入力:</strong></p>
+<ul>
+<li>二値画像Q (1は黒画素、0は白画素を表す)</li>
+</ul>
+<p><strong>出力:</strong></p>
+<ul>
+<li>細線化された二値画像Q</li>
+</ul>
+<p><strong>処理手順:</strong></p>
+<ol>
+<li>変数g, hを1で初期化する。二値画像QのコピーをQ&rsquo;とする。</li>
+<li>hが1である間、以下の処理を繰り返す。
+<ul>
+<li>hを0にする。</li>
+<li>gの値を反転させる (1 -&gt; 0, 0 -&gt; 1)。</li>
+<li>Q&rsquo;の内容をQにコピーする。</li>
+<li>Q内の全ての画素pについて、以下の処理を行う。
+<ul>
+<li>pの8近傍の画素値に基づいて、b(p), a(p), c(p), e(p), f(p)を計算する (詳細は後述)。</li>
+<li>もし1 &lt; b(p) &lt; 7 かつ (a(p) = 1 もしくは c(p) = 1) ならば、以下の処理を行う。
+<ul>
+<li>g = 0 かつ e(p) = 0 ならば、Q&rsquo;内の画素pを白画素(0)にする。</li>
+<li>g = 1 かつ f(p) = 0 ならば、Q&rsquo;内の画素pを白画素(0)にする。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>細線化処理が完了したので、Qを返す。</li>
+</ol>
+<p><strong>各変数の意味:</strong></p>
+<ul>
+<li><strong>p(n):</strong> 画素pの8近傍の画素を表す (n = 0, 1, &hellip;, 7)。
+<ul>
+<li>例えば、p(0)はpの右隣の画素、p(1)はpの右斜め下の画素を表す。</li>
+</ul>
+</li>
+<li><strong>b(p):</strong> pの8近傍にある黒画素の数。</li>
+<li><strong>a(p):</strong> pの8近傍を時計回りもしくは反時計回りに一周するとき、白画素から黒画素への遷移回数。</li>
+<li><strong>c(p), d(p):</strong> pとその8近傍の画素の配置パターンに基づいて、1または0を取る。特定のパターンにのみ1となる。</li>
+<li><strong>e(p), f(p):</strong> pとその8近傍の画素の配置パターンに基づいて、1または0を取る。特定のパターンにのみ1となる。</li>
+</ul>
+<h4 id="アルゴリズム2">アルゴリズム2</h4>
+<p>アルゴリズム1は非対称な処理のため、本来削除されるべきでない画素まで削除してしまう場合がある。そこで、アルゴリズム1の非対称性を解消するために、以下の変更を加えたアルゴリズムを<strong>対称型NWGアルゴリズム</strong>と呼ぶ。</p>
+<ul>
+<li>アルゴリズム1の 7. の条件式 <code>(a(p) = 1 or c(p) = 1)</code> を <code>(a(p) = 1 or (1-g) * c(p) + g * d(p) = 1)</code> に変更する。</li>
+<li>d(p)はc(p)と同様に、pとその8近傍の画素の配置パターンに基づいて、1または0を取る。特定のパターンにのみ1となる。</li>
+</ul>
+<p>この変更により、より正確な細線化結果を得ることができる。</p>
+<h3 id="pythonによるnwg法の実装">PythonによるNWG法の実装</h3>
+<p>以上を踏まえ、NWG細線化の実装を行なった。Pythonで実装する際には、Numpyを使用しないと遅いのでOpenCV+Numpyを前提とした実装を行なった。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">NWG</span>(img:np<span style="color:#f92672">.</span>ndarray, symmetric:bool<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>) <span style="color:#f92672">-&gt;</span> np<span style="color:#f92672">.</span>ndarray:
+</span></span><span style="display:flex;"><span>    src <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>copy(img)<span style="color:#f92672">//</span><span style="color:#ae81ff">255</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># zero padding</span>
+</span></span><span style="display:flex;"><span>    ROW, COLUMN <span style="color:#f92672">=</span> src<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">+</span><span style="color:#ae81ff">2</span>, src<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">+</span><span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>    pad <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros((ROW, COLUMN))
+</span></span><span style="display:flex;"><span>    pad[<span style="color:#ae81ff">1</span>:ROW<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>:COLUMN<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> src
+</span></span><span style="display:flex;"><span>    src <span style="color:#f92672">=</span> pad
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    switch <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> <span style="color:#66d9ef">True</span>:
+</span></span><span style="display:flex;"><span>        r, c <span style="color:#f92672">=</span> src<span style="color:#f92672">.</span>nonzero()
+</span></span><span style="display:flex;"><span>        nei <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array((src[r<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, c], src[r<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, c<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>], src[r, c<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>],
+</span></span><span style="display:flex;"><span>                        src[r<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>, c<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>], src[r<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>, c], src[r<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>, c<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>],
+</span></span><span style="display:flex;"><span>                        src[r, c<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>], src[r<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, c<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># condition 1</span>
+</span></span><span style="display:flex;"><span>        nei_sum <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sum(nei, axis<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>        cond1 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>logical_and(<span style="color:#ae81ff">2</span> <span style="color:#f92672">&lt;=</span> nei_sum, nei_sum <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">6</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># condition 2</span>
+</span></span><span style="display:flex;"><span>        nei <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>concatenate([nei, np<span style="color:#f92672">.</span>array([nei[<span style="color:#ae81ff">0</span>]])], axis<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>        cond2 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros(nei<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">1</span>], dtype<span style="color:#f92672">=</span>np<span style="color:#f92672">.</span>uint8)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">9</span>):
+</span></span><span style="display:flex;"><span>            cond2 <span style="color:#f92672">+=</span> np<span style="color:#f92672">.</span>array(
+</span></span><span style="display:flex;"><span>                np<span style="color:#f92672">.</span>logical_and(nei[i<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>, nei[i] <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>), dtype<span style="color:#f92672">=</span>np<span style="color:#f92672">.</span>uint8)
+</span></span><span style="display:flex;"><span>        cond2 <span style="color:#f92672">=</span> cond2 <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>        nei <span style="color:#f92672">=</span> nei[<span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">8</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># condition 3</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> symmetric:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> switch:
+</span></span><span style="display:flex;"><span>                c3a <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>logical_and(
+</span></span><span style="display:flex;"><span>                    nei[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">+</span>nei[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">+</span>nei[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">+</span>nei[<span style="color:#ae81ff">5</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>, nei[<span style="color:#ae81ff">4</span>]<span style="color:#f92672">+</span>nei[<span style="color:#ae81ff">6</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>                c3b <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>logical_and(
+</span></span><span style="display:flex;"><span>                    nei[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">+</span>nei[<span style="color:#ae81ff">3</span>]<span style="color:#f92672">+</span>nei[<span style="color:#ae81ff">4</span>]<span style="color:#f92672">+</span>nei[<span style="color:#ae81ff">7</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>, nei[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">+</span>nei[<span style="color:#ae81ff">6</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>                cond3 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>logical_or(c3a, c3b)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>                c3c <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>logical_and(
+</span></span><span style="display:flex;"><span>                    nei[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">+</span>nei[<span style="color:#ae81ff">4</span>]<span style="color:#f92672">+</span>nei[<span style="color:#ae81ff">5</span>]<span style="color:#f92672">+</span>nei[<span style="color:#ae81ff">6</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>, nei[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">+</span>nei[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>                c3d <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>logical_and(
+</span></span><span style="display:flex;"><span>                    nei[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">+</span>nei[<span style="color:#ae81ff">3</span>]<span style="color:#f92672">+</span>nei[<span style="color:#ae81ff">6</span>]<span style="color:#f92672">+</span>nei[<span style="color:#ae81ff">7</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>, nei[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">+</span>nei[<span style="color:#ae81ff">4</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>                cond3 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>logical_or(c3c, c3d)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>            c3a <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>logical_and(
+</span></span><span style="display:flex;"><span>                nei[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">+</span>nei[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">+</span>nei[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">+</span>nei[<span style="color:#ae81ff">5</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>, nei[<span style="color:#ae81ff">4</span>]<span style="color:#f92672">+</span>nei[<span style="color:#ae81ff">6</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>            c3b <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>logical_and(
+</span></span><span style="display:flex;"><span>                nei[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">+</span>nei[<span style="color:#ae81ff">3</span>]<span style="color:#f92672">+</span>nei[<span style="color:#ae81ff">4</span>]<span style="color:#f92672">+</span>nei[<span style="color:#ae81ff">7</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>, nei[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">+</span>nei[<span style="color:#ae81ff">6</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>            cond3 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>logical_or(c3a, c3b)    
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># condition 4</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> switch:
+</span></span><span style="display:flex;"><span>            cond4 <span style="color:#f92672">=</span> (nei[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">+</span>nei[<span style="color:#ae81ff">4</span>])<span style="color:#f92672">*</span>nei[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">*</span>nei[<span style="color:#ae81ff">6</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>            cond4 <span style="color:#f92672">=</span> (nei[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">+</span>nei[<span style="color:#ae81ff">6</span>])<span style="color:#f92672">*</span>nei[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">*</span>nei[<span style="color:#ae81ff">4</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        cond <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>logical_and(cond1, np<span style="color:#f92672">.</span>logical_or(cond2, cond3))
+</span></span><span style="display:flex;"><span>        cond <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>logical_and(cond, cond4)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#66d9ef">True</span> <span style="color:#f92672">in</span> cond:
+</span></span><span style="display:flex;"><span>            switch <span style="color:#f92672">=</span> <span style="color:#f92672">not</span> switch
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> (src[<span style="color:#ae81ff">1</span>:ROW<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>:COLUMN<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]<span style="color:#f92672">*</span><span style="color:#ae81ff">255</span>)<span style="color:#f92672">.</span>astype(np<span style="color:#f92672">.</span>uint8)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        src[r[cond], c[cond]] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span></code></pre></div><h2 id="次回">次回</h2>
+<p>Cythonを利用した高速化について書く予定&hellip;</p>
+
+      </article>
+
+      
+
+
+  
+<script type="text/javascript">
+  (function() {
+    const themeToggle = document.querySelector('.darkmode-toggle input');
+    const light = 'light';
+    const dark = 'dark';
+    let isDark = localStorage.theme === dark || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    let theme = isDark ? dark : light;
+
+    const s = document.createElement('script');
+    s.type = 'text/javascript';
+    const dataset = {
+        repo: 'tomowang\/hugo-theme-tailwind',
+        repoId: 'R_kgDOKjVJHA',
+        category: 'Announcements',
+        categoryId: 'DIC_kwDOKjVJHM4CafqS',
+        mapping: 'pathname',
+        reactionsEnabled: '1',
+        emitMetadata: '0',
+        theme: theme,
+        lang: 'en',
+    };
+    s.src = 'https://giscus.app/client.js';
+    s.crossorigin = 'anonymous';
+    s.async = true;
+    Object.entries(dataset).forEach(function(a) {
+        return s.dataset[a[0]] = a[1];
+    });
+
+    const curScriptElement = document.currentScript;
+    curScriptElement.parentNode.insertBefore(s, curScriptElement);
+
+    function sendMessage(message) {
+      const iframe = document.querySelector('iframe.giscus-frame');
+      
+      if (!iframe) return;
+      iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+    }
+
+    themeToggle.addEventListener('change', function () {
+      if (this.checked) {
+        theme = dark;
+      } else {
+        theme = light;
+      }
+      sendMessage({
+        setConfig: {
+          theme: theme,
+        }
+      });
+    });
+  })();
+</script>
+  
+
+
+
+    </div>
+  </div>
+</div>
+
+  </main>
+  <footer class="flex flex-none justify-center">
+    <section class="flex flex-col md:flex-row mx-2 md:mx-0 gap-2 md:gap-0 justify-between w-full max-w-4xl lg:max-w-5xl py-6 text-slate-500 dark:text-slate-300">
+  <div class="flex flex-row">
+    
+  
+  
+    <a href="https://github.com/Kotetsu0000" target="_blank" title="Github" class="flex flex-row mr-2">
+      <span class="hidden">Github</span>
+      <i class="h-6 w-6 flex-none"> <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5"></path>
+</svg>
+ </i>
+    </a>
+  
+  
+
+
+  </div>
+  <div class="grow"></div>
+  <div class="flex flex-row">
+    
+    
+  </div>
+  
+  <div class="flex flex-row">
+    <span class="ml-0 pl-0 md:ml-2 md:pl-2 border-l-0 md:border-l border-slate-300 dark:border-slate-400">
+      
+    </span>
+  </div>
+  
+</section>
+
+  </footer>
+  <script src="/main.js"></script>
+
+<div class="hidden top-1 right-1" id="code-copy">
+  <i class="h-6 w-6 block">
+    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copy" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" />
+  <path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" />
+</svg>
+
+  </i>
+</div>
+<div class="hidden top-1 right-1" id="code-copy-done">
+  <i class="h-6 w-6 block">
+    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-check" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M5 12l5 5l10 -10" />
+</svg>
+
+  </i>
+</div><script src="/code-copy.js"></script>
+
+
+
+
+
+</body>
+</html>

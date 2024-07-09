@@ -1,0 +1,36 @@
+#baseURL = "https://example.com/"
+title = "Kotetsu's tech blog"
+author = "Kotetsu0000"
+copyright = "(c) 2024 Kotetsu0000"
+paginate = 10
+languageCode = "ja"
+defaultContentLanguage = "ja"
+theme = "tailwind"
+
+[params]
+  # dir name of your blog content (default is `content/posts`).
+  # the list of set content will show up on your index page (baseurl).
+  contentTypeName = "posts"
+  math = true
+
+  [params.header]
+    logo = "images/logo.svg"
+
+  [params.footer]
+    since = 2024
+    poweredby = true
+
+[taxonomies]
+category = "categories"
+tag = "tags"
+series = "series"
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.extensions]
+      [markup.goldmark.extensions.passthrough]
+        enable = true
+        [markup.goldmark.extensions.passthrough.delimiters]
+          block = [['\[', '\]'], ['$$', '$$']]
+          inline = [['\(', '\)'], ['$', '$']]
+  

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on Kotetsu&#39;s tech blog</title>
+    <link>http://localhost:1313/zh-cn/categories/</link>
+    <description>Recent content in Categories on Kotetsu&#39;s tech blog</description>
+    <generator>Hugo</generator>
+    <language>zh-CN</language>
+    <managingEditor>user@example.com (Xiaoliang Wang)</managingEditor>
+    <webMaster>user@example.com (Xiaoliang Wang)</webMaster>
+    <copyright>(c) 2024 Kotetsu0000</copyright>
+    <lastBuildDate>Fri, 01 Dec 2023 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/zh-cn/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>With-Slug</title>
+      <link>http://localhost:1313/zh-cn/categories/with-slug/</link>
+      <pubDate>Fri, 01 Dec 2023 00:00:00 +0000</pubDate><author>user@example.com (Xiaoliang Wang)</author>
+      <guid>http://localhost:1313/zh-cn/categories/with-slug/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Syntax</title>
+      <link>http://localhost:1313/zh-cn/categories/syntax/</link>
+      <pubDate>Mon, 11 Mar 2019 00:00:00 +0000</pubDate><author>user@example.com (Xiaoliang Wang)</author>
+      <guid>http://localhost:1313/zh-cn/categories/syntax/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Themes</title>
+      <link>http://localhost:1313/zh-cn/categories/themes/</link>
+      <pubDate>Mon, 11 Mar 2019 00:00:00 +0000</pubDate><author>user@example.com (Xiaoliang Wang)</author>
+      <guid>http://localhost:1313/zh-cn/categories/themes/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>

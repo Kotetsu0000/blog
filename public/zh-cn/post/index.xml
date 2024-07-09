@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Kotetsu&#39;s tech blog</title>
+    <link>http://localhost:1313/zh-cn/post/</link>
+    <description>Recent content in Posts on Kotetsu&#39;s tech blog</description>
+    <generator>Hugo</generator>
+    <language>zh-CN</language>
+    <managingEditor>user@example.com (Xiaoliang Wang)</managingEditor>
+    <webMaster>user@example.com (Xiaoliang Wang)</webMaster>
+    <copyright>(c) 2024 Kotetsu0000</copyright>
+    <lastBuildDate>Fri, 01 Dec 2023 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/zh-cn/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>图片处理</title>
+      <link>http://localhost:1313/zh-cn/post/image-process/</link>
+      <pubDate>Fri, 01 Dec 2023 00:00:00 +0000</pubDate><author>user@example.com (Xiaoliang Wang)</author>
+      <guid>http://localhost:1313/zh-cn/post/image-process/</guid>
+      <description> Photo by Behnam Norouzi on Unsplash&#xA;Test for external image Test for svg </description>
+    </item>
+    <item>
+      <title>Markdown语法指导</title>
+      <link>http://localhost:1313/zh-cn/post/markdown-syntax/</link>
+      <pubDate>Mon, 11 Mar 2019 00:00:00 +0000</pubDate><author>user@example.com (Xiaoliang Wang)</author>
+      <guid>http://localhost:1313/zh-cn/post/markdown-syntax/</guid>
+      <description>&lt;p&gt;本文档提供可用于 Hugo 内容文件的基本 Markdown 语法示例，并且还展示了 Hugo 主题中是否用 CSS 修饰了 HTML 基本元素。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>富文本内容</title>
+      <link>http://localhost:1313/zh-cn/post/rich-content/</link>
+      <pubDate>Sun, 10 Mar 2019 00:00:00 +0000</pubDate><author>user@example.com (Xiaoliang Wang)</author>
+      <guid>http://localhost:1313/zh-cn/post/rich-content/</guid>
+      <description>&lt;p&gt;Hugo 附带了几个用于丰富内容的&lt;a href=&#34;https://gohugo.io/content-management/shortcodes/#use-hugos-built-in-shortcodes&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Shortcodes&lt;/a&gt;&#xA;，以及一个[隐私配置](https: //gohugo.io/about/hugo-and-gdpr/）和一组简单的短代码，可实现各种社交媒体嵌入的静态和非 JS 版本。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>数学符号</title>
+      <link>http://localhost:1313/zh-cn/post/math-typesetting/</link>
+      <pubDate>Fri, 08 Mar 2019 00:00:00 +0000</pubDate><author>user@example.com (Xiaoliang Wang)</author>
+      <guid>http://localhost:1313/zh-cn/post/math-typesetting/</guid>
+      <description>&lt;p&gt;在 Hugo 项目中，可以通过使用第三方 JavaScript 库来启用数学符号。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Emoji 支持</title>
+      <link>http://localhost:1313/zh-cn/post/emoji-support/</link>
+      <pubDate>Tue, 05 Mar 2019 00:00:00 +0000</pubDate><author>user@example.com (Xiaoliang Wang)</author>
+      <guid>http://localhost:1313/zh-cn/post/emoji-support/</guid>
+      <description>&lt;p&gt;可以在一个 Hugo 项目中通过多种方式启用 Emoji。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

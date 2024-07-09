@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>With-Slug on Kotetsu&#39;s tech blog</title>
+    <link>http://localhost:1313/zh-cn/categories/with-slug/</link>
+    <description>Recent content in With-Slug on Kotetsu&#39;s tech blog</description>
+    <generator>Hugo</generator>
+    <language>zh-CN</language>
+    <managingEditor>user@example.com (Xiaoliang Wang)</managingEditor>
+    <webMaster>user@example.com (Xiaoliang Wang)</webMaster>
+    <copyright>(c) 2024 Kotetsu0000</copyright>
+    <lastBuildDate>Fri, 01 Dec 2023 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/zh-cn/categories/with-slug/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>图片处理</title>
+      <link>http://localhost:1313/zh-cn/post/image-process/</link>
+      <pubDate>Fri, 01 Dec 2023 00:00:00 +0000</pubDate><author>user@example.com (Xiaoliang Wang)</author>
+      <guid>http://localhost:1313/zh-cn/post/image-process/</guid>
+      <description> Photo by Behnam Norouzi on Unsplash&#xA;Test for external image Test for svg </description>
+    </item>
+  </channel>
+</rss>
