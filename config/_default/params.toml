@@ -21,18 +21,18 @@ jsonLD = true
 
 # giscus is comments system powered by GitHub Discussions
 # generate configurations from https://giscus.app/
-[giscus]
-  enabled = true
-  repo = "tomowang/hugo-theme-tailwind"
-  repoID = "R_kgDOKjVJHA"
-  category = "Announcements"
-  categoryID = "DIC_kwDOKjVJHM4CafqS"
-  mapping = "pathname"
-  strict = "0"
-  reactionsEnabled = "1"
-  emitMetadata = "0"
-  inputPosition = "bottom"
-  lang = "en"
+#[giscus]
+#  enabled = true
+#  repo = "tomowang/hugo-theme-tailwind"
+#  repoID = "R_kgDOKjVJHA"
+#  category = "Announcements"
+#  categoryID = "DIC_kwDOKjVJHM4CafqS"
+#  mapping = "pathname"
+#  strict = "0"
+#  reactionsEnabled = "1"
+#  emitMetadata = "0"
+#  inputPosition = "bottom"
+#  lang = "en"
 
 [social_media]
   #[[social_media.items]]
