@@ -2,6 +2,8 @@
 title = '【Python】NWG細線化を実装してみた'
 date = 2024-07-07T03:46:53+09:00
 description = "細線化アルゴリズムはいくつかあり、「Zhang-Suen法」や「田村法」等ある。「Zhang-Suen法」についてはPythonでの実装例が見つかったが、NWG法は実装例がなかったため、実装することにした。"
+categories = ["Python", "Image Processing"]
+tags = ["Python", "Image Processing"]
 +++
 
 細線化アルゴリズムはいくつかあり、「Zhang-Suen法」や「田村法」等ある。「Zhang-Suen法」についてはPythonでの実装例が見つかったが、NWG法は実装例がなかったため、実装することにした。(もしかしたらどこかのライブラリで既に実装されているかもしれないが)

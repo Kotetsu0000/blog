@@ -7,8 +7,15 @@
     <generator>Hugo</generator>
     <language>ja</language>
     <copyright>(c) 2024 Kotetsu0000</copyright>
-    <lastBuildDate>Sun, 07 Jul 2024 03:46:53 +0900</lastBuildDate>
+    <lastBuildDate>Wed, 10 Jul 2024 11:07:27 +0900</lastBuildDate>
     <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>【Cython】PythonのNWG細線化の高速化</title>
+      <link>http://localhost:1313/post/nagendraprasad_wang_gupta_thinning_algorithm_cython/</link>
+      <pubDate>Wed, 10 Jul 2024 11:07:27 +0900</pubDate>
+      <guid>http://localhost:1313/post/nagendraprasad_wang_gupta_thinning_algorithm_cython/</guid>
+      <description>前回 、Numpyを利用したNWG法の実装を行なった。今回はこれを高速化していく。&#xA;Cython Pythonを高速化する上では様々な方法があるように思う。Numpyを使用するのもその一例であるが、それ以外にはC言語のコードを呼び出すというものがある。&#xA;C、C++のバインディングライブラリとしては、pybind11やCythonなどが挙げられる。今回は既にPythonに存在するコードを書き換えるのでCythonを利用した。&#xA;元のコード まずは前回作成したPythonのコードである。&#xA;import numpy as np def NWG(img:np.ndarray, symmetric:bool=False) -&amp;gt; np.ndarray: src = np.copy(img)//255 # zero padding ROW, COLUMN = src.shape[0]+2, src.shape[1]+2 pad = np.zeros((ROW, COLUMN)) pad[1:ROW-1, 1:COLUMN-1] = src src = pad switch = True while True: r, c = src.nonzero() nei = np.array((src[r-1, c], src[r-1, c+1], src[r, c+1], src[r+1, c+1], src[r+1, c], src[r+1, c-1], src[r, c-1], src[r-1, c-1])) # condition 1 nei_sum = np.</description>
+    </item>
     <item>
       <title>【Python】NWG細線化を実装してみた</title>
       <link>http://localhost:1313/post/nagendraprasad_wang_gupta_thinning_algorithm_python/</link>
