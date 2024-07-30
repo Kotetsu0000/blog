@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja" dir="ltr">
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<head>
   <title>【Cython】PythonのNWG細線化の高速化 :: Kotetsu&#39;s tech blog</title>
   
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
@@ -18,7 +18,7 @@ import numpy as np def NWG(img:np.ndarray, symmetric:bool=False) -&amp;gt; np.nd
   content="Kotetsu0000"
 />
 <meta name="robots" content="noodp" />
-<meta property="og:url" content="http://localhost:1313/post/nagendraprasad_wang_gupta_thinning_algorithm_cython/">
+<meta property="og:url" content="https://example.org/post/nagendraprasad_wang_gupta_thinning_algorithm_cython/">
   <meta property="og:site_name" content="Kotetsu&#39;s tech blog">
   <meta property="og:title" content="【Cython】PythonのNWG細線化の高速化">
   <meta property="og:description" content="PythonでNWG細線化のコードを作成したので、Cythonで高速化を行なった。">
@@ -36,10 +36,10 @@ import numpy as np def NWG(img:np.ndarray, symmetric:bool=False) -&amp;gt; np.nd
   <meta name="twitter:description" content="PythonでNWG細線化のコードを作成したので、Cythonで高速化を行なった。">
 
 
-<link rel="canonical" href="http://localhost:1313/post/nagendraprasad_wang_gupta_thinning_algorithm_cython/" />
+<link rel="canonical" href="https://example.org/post/nagendraprasad_wang_gupta_thinning_algorithm_cython/" />
 
 <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico">
-<link rel="stylesheet" href="/css/index.4573e47dcfff49700db206601116cd2f48db1912c244b1d0b312713d4ca4a32e.css">
+<link rel="stylesheet" href="/css/index.min.5d96433bd17079764d5a8866addd6d7848ea8295977a06688f43c5be97af544e.css">
 
 
 
@@ -71,7 +71,7 @@ import numpy as np def NWG(img:np.ndarray, symmetric:bool=False) -&amp;gt; np.nd
 
   
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"Article","author":{"@type":"Person","name":"Kotetsu0000"},"dateModified":"2024-07-10T11:07:27+09:00","datePublished":"2024-07-10T11:07:27+09:00","description":"前回 、Numpyを利用したNWG法の実装を行なった。今回はこれを高速化していく。\nCython Pythonを高速化する上では様々な方法があるように思う。Numpyを使用するのもその一例であるが、それ以外にはC言語のコードを呼び出すというものがある。\nC、C++のバインディングライブラリとしては、pybind11やCythonなどが挙げられる。今回は既にPythonに存在するコードを書き換えるのでCythonを利用した。\n元のコード まずは前回作成したPythonのコードである。\nimport numpy as np def NWG(img:np.ndarray, symmetric:bool=False) -\u0026gt; np.ndarray: src = np.copy(img)//255 # zero padding ROW, COLUMN = src.shape[0]+2, src.shape[1]+2 pad = np.zeros((ROW, COLUMN)) pad[1:ROW-1, 1:COLUMN-1] = src src = pad switch = True while True: r, c = src.nonzero() nei = np.array((src[r-1, c], src[r-1, c+1], src[r, c+1], src[r+1, c+1], src[r+1, c], src[r+1, c-1], src[r, c-1], src[r-1, c-1])) # condition 1 nei_sum = np.","name":"【Cython】PythonのNWG細線化の高速化","url":"http://localhost:1313/post/nagendraprasad_wang_gupta_thinning_algorithm_cython/"}
+  {"@context":"https://schema.org","@type":"Article","author":{"@type":"Person","name":"Kotetsu0000"},"dateModified":"2024-07-10T11:07:27+09:00","datePublished":"2024-07-10T11:07:27+09:00","description":"前回 、Numpyを利用したNWG法の実装を行なった。今回はこれを高速化していく。\nCython Pythonを高速化する上では様々な方法があるように思う。Numpyを使用するのもその一例であるが、それ以外にはC言語のコードを呼び出すというものがある。\nC、C++のバインディングライブラリとしては、pybind11やCythonなどが挙げられる。今回は既にPythonに存在するコードを書き換えるのでCythonを利用した。\n元のコード まずは前回作成したPythonのコードである。\nimport numpy as np def NWG(img:np.ndarray, symmetric:bool=False) -\u0026gt; np.ndarray: src = np.copy(img)//255 # zero padding ROW, COLUMN = src.shape[0]+2, src.shape[1]+2 pad = np.zeros((ROW, COLUMN)) pad[1:ROW-1, 1:COLUMN-1] = src src = pad switch = True while True: r, c = src.nonzero() nei = np.array((src[r-1, c], src[r-1, c+1], src[r, c+1], src[r+1, c+1], src[r+1, c], src[r+1, c-1], src[r, c-1], src[r-1, c-1])) # condition 1 nei_sum = np.","name":"【Cython】PythonのNWG細線化の高速化","url":"https://example.org/post/nagendraprasad_wang_gupta_thinning_algorithm_cython/"}
 </script>
 
   
@@ -86,18 +86,7 @@ import numpy as np def NWG(img:np.ndarray, symmetric:bool=False) -&amp;gt; np.nd
 </script>
   
 </head>
-<body class="flex flex-col min-h-screen w-full bg-slate-50 dark:bg-gray-800">
-    
-<div class="fixed right-0 top-0 z-50 flex items-center justify-center bg-gray-200 p-2 text-sm uppercase text-black sm:bg-red-200 md:bg-yellow-200 lg:bg-green-200 xl:bg-blue-200 2xl:bg-pink-200">
-  <span class="block sm:hidden">all</span>
-  <span class="hidden sm:block md:hidden">sm</span>
-  <span class="hidden md:block lg:hidden">md</span>
-  <span class="hidden lg:block xl:hidden">lg</span>
-  <span class="hidden xl:block 2xl:hidden">xl</span>
-  <span class="hidden 2xl:block">2xl</span>
-</div>
-
-  <header class="flex flex-none justify-center z-10">
+<body class="flex flex-col min-h-screen w-full bg-slate-50 dark:bg-gray-800"><header class="flex flex-none justify-center z-10">
     <div class="flex flex-row gap justify-between w-full max-w-4xl lg:max-w-5xl h-12 mt-3">
   <div class="flex-none ml-2 md:ml-0">
     <a href="/" class="">
@@ -712,7 +701,7 @@ import numpy as np def NWG(img:np.ndarray, symmetric:bool=False) -&amp;gt; np.nd
 </section>
 
   </footer>
-  <script src="/main.js"></script>
+  <script src="/main.min.c6372b6836971865bd94bfde974748aca8415824a2facab6ccd66a87384bfacb.js"></script>
 
 <div class="hidden top-1 right-1" id="code-copy">
   <i class="h-6 w-6 block">
@@ -732,7 +721,7 @@ import numpy as np def NWG(img:np.ndarray, symmetric:bool=False) -&amp;gt; np.nd
 </svg>
 
   </i>
-</div><script src="/code-copy.js"></script>
+</div><script src="/code-copy.min.e7b2a74adef1ed474c335c8bd5e7832b2316b8842b0f9184d65286c5bd64f51a.js"></script>
 
 
 

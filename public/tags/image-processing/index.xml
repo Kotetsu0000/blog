@@ -2,26 +2,26 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Image Processing on Kotetsu&#39;s tech blog</title>
-    <link>http://localhost:1313/tags/image-processing/</link>
+    <link>https://example.org/tags/image-processing/</link>
     <description>Recent content in Image Processing on Kotetsu&#39;s tech blog</description>
     <generator>Hugo</generator>
     <language>ja</language>
     <copyright>(c) 2024 Kotetsu0000</copyright>
     <lastBuildDate>Wed, 10 Jul 2024 11:07:27 +0900</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/image-processing/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://example.org/tags/image-processing/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>【Cython】PythonのNWG細線化の高速化</title>
-      <link>http://localhost:1313/post/nagendraprasad_wang_gupta_thinning_algorithm_cython/</link>
+      <link>https://example.org/post/nagendraprasad_wang_gupta_thinning_algorithm_cython/</link>
       <pubDate>Wed, 10 Jul 2024 11:07:27 +0900</pubDate>
-      <guid>http://localhost:1313/post/nagendraprasad_wang_gupta_thinning_algorithm_cython/</guid>
-      <description>前回 、Numpyを利用したNWG法の実装を行なった。今回はこれを高速化していく。&#xA;Cython Pythonを高速化する上では様々な方法があるように思う。Numpyを使用するのもその一例であるが、それ以外にはC言語のコードを呼び出すというものがある。&#xA;C、C++のバインディングライブラリとしては、pybind11やCythonなどが挙げられる。今回は既にPythonに存在するコードを書き換えるのでCythonを利用した。&#xA;元のコード まずは前回作成したPythonのコードである。&#xA;def NWG(img:np.ndarray, symmetric:bool=False) -&amp;gt; np.ndarray: src = np.copy(img)//255 # zero padding ROW, COLUMN = src.shape[0]+2, src.shape[1]+2 pad = np.zeros((ROW, COLUMN)) pad[1:ROW-1, 1:COLUMN-1] = src src = pad switch = True while True: r, c = src.nonzero() nei = np.array((src[r-1, c], src[r-1, c+1], src[r, c+1], src[r+1, c+1], src[r+1, c], src[r+1, c-1], src[r, c-1], src[r-1, c-1])) # condition 1 nei_sum = np.sum(nei, axis=0) cond1 = np.</description>
+      <guid>https://example.org/post/nagendraprasad_wang_gupta_thinning_algorithm_cython/</guid>
+      <description>前回 、Numpyを利用したNWG法の実装を行なった。今回はこれを高速化していく。&#xA;Cython Pythonを高速化する上では様々な方法があるように思う。Numpyを使用するのもその一例であるが、それ以外にはC言語のコードを呼び出すというものがある。&#xA;C、C++のバインディングライブラリとしては、pybind11やCythonなどが挙げられる。今回は既にPythonに存在するコードを書き換えるのでCythonを利用した。&#xA;元のコード まずは前回作成したPythonのコードである。&#xA;import numpy as np def NWG(img:np.ndarray, symmetric:bool=False) -&amp;gt; np.ndarray: src = np.copy(img)//255 # zero padding ROW, COLUMN = src.shape[0]+2, src.shape[1]+2 pad = np.zeros((ROW, COLUMN)) pad[1:ROW-1, 1:COLUMN-1] = src src = pad switch = True while True: r, c = src.nonzero() nei = np.array((src[r-1, c], src[r-1, c+1], src[r, c+1], src[r+1, c+1], src[r+1, c], src[r+1, c-1], src[r, c-1], src[r-1, c-1])) # condition 1 nei_sum = np.</description>
     </item>
     <item>
       <title>【Python】NWG細線化を実装してみた</title>
-      <link>http://localhost:1313/post/nagendraprasad_wang_gupta_thinning_algorithm_python/</link>
+      <link>https://example.org/post/nagendraprasad_wang_gupta_thinning_algorithm_python/</link>
       <pubDate>Sun, 07 Jul 2024 03:46:53 +0900</pubDate>
-      <guid>http://localhost:1313/post/nagendraprasad_wang_gupta_thinning_algorithm_python/</guid>
-      <description>細線化アルゴリズムはいくつかあり、「Zhang-Suen法」や「田村法」等ある。「Zhang-Suen法」についてはPythonでの実装例が見つかったが、NWG法は実装例がなかったため、実装することにした。(もしかしたらどこかのライブラリで既に実装されているかもしれないが)&#xA;NWG細線化とは？ NWG法とは Nagendraprasad-Wang-Guptaの細線化アルゴリズムのことで、細線化アルゴリズムの一つである。(参考: A note on the Nagendraprasad-Wang-Gupta thinning algorithm )&#xA;アルゴリズム詳細 NWG法のCythonによる高速化 8月頃にNWG法を簡易的に高速化した。その際にもう少し高速化ができる余地が残されているという話をしたが、その作業を行った。&#xA;NWG法について NWG法とは Nagendraprasad-Wang-Guptaの細線化アルゴリズムのことで、細線化アルゴリズムの一つである。疑似コードは次のようになる。&#xA;アルゴリズム1 入力:&#xA;二値画像Q (1は黒画素、0は白画素を表す) 出力:&#xA;細線化された二値画像Q 処理手順:&#xA;変数g, hを1で初期化する。二値画像QのコピーをQ&amp;rsquo;とする。 hが1である間、以下の処理を繰り返す。 hを0にする。 gの値を反転させる (1 -&amp;gt; 0, 0 -&amp;gt; 1)。 Q&amp;rsquo;の内容をQにコピーする。 Q内の全ての画素pについて、以下の処理を行う。 pの8近傍の画素値に基づいて、b(p), a(p), c(p), e(p), f(p)を計算する (詳細は後述)。 もし1 &amp;lt; b(p) &amp;lt; 7 かつ (a(p) = 1 もしくは c(p) = 1) ならば、以下の処理を行う。 g = 0 かつ e(p) = 0 ならば、Q&amp;rsquo;内の画素pを白画素(0)にする。 g = 1 かつ f(p) = 0 ならば、Q&amp;rsquo;内の画素pを白画素(0)にする。 細線化処理が完了したので、Qを返す。 各変数の意味:</description>
+      <guid>https://example.org/post/nagendraprasad_wang_gupta_thinning_algorithm_python/</guid>
+      <description>細線化アルゴリズムはいくつかあり、「Zhang-Suen法」や「田村法」等ある。「Zhang-Suen法」についてはPythonでの実装例が見つかったが、NWG法は実装例がなかったため、実装することにした。(もしかしたらどこかのライブラリで既に実装されているかもしれないが)&#xA;NWG細線化とは？ NWG法とは Nagendraprasad-Wang-Guptaの細線化アルゴリズムのことで、細線化アルゴリズムの一つである。(参考: A note on the Nagendraprasad-Wang-Gupta thinning algorithm )&#xA;アルゴリズム1 入力:&#xA;二値画像Q (1は黒画素、0は白画素を表す) 出力:&#xA;細線化された二値画像Q 処理手順:&#xA;変数g, hを1で初期化する。二値画像QのコピーをQ&amp;rsquo;とする。 hが1である間、以下の処理を繰り返す。 hを0にする。 gの値を反転させる (1 -&amp;gt; 0, 0 -&amp;gt; 1)。 Q&amp;rsquo;の内容をQにコピーする。 Q内の全ての画素pについて、以下の処理を行う。 pの8近傍の画素値に基づいて、b(p), a(p), c(p), e(p), f(p)を計算する (詳細は後述)。 もし1 &amp;lt; b(p) &amp;lt; 7 かつ (a(p) = 1 もしくは c(p) = 1) ならば、以下の処理を行う。 g = 0 かつ e(p) = 0 ならば、Q&amp;rsquo;内の画素pを白画素(0)にする。 g = 1 かつ f(p) = 0 ならば、Q&amp;rsquo;内の画素pを白画素(0)にする。 細線化処理が完了したので、Qを返す。 各変数の意味:</description>
     </item>
   </channel>
 </rss>

@@ -2,63 +2,63 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/</loc>
+    <loc>https://example.org/</loc>
     <lastmod>2024-07-10T11:07:27+09:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/post/nagendraprasad_wang_gupta_thinning_algorithm_cython/</loc>
+    <loc>https://example.org/post/nagendraprasad_wang_gupta_thinning_algorithm_cython/</loc>
     <lastmod>2024-07-10T11:07:27+09:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/</loc>
+    <loc>https://example.org/categories/</loc>
     <lastmod>2024-07-10T11:07:27+09:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/image-processing/</loc>
+    <loc>https://example.org/tags/image-processing/</loc>
     <lastmod>2024-07-10T11:07:27+09:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/image-processing/</loc>
+    <loc>https://example.org/categories/image-processing/</loc>
     <lastmod>2024-07-10T11:07:27+09:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/post/</loc>
+    <loc>https://example.org/post/</loc>
     <lastmod>2024-07-10T11:07:27+09:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/python/</loc>
+    <loc>https://example.org/tags/python/</loc>
     <lastmod>2024-07-10T11:07:27+09:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/python/</loc>
+    <loc>https://example.org/categories/python/</loc>
     <lastmod>2024-07-10T11:07:27+09:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/</loc>
+    <loc>https://example.org/tags/</loc>
     <lastmod>2024-07-10T11:07:27+09:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/post/nagendraprasad_wang_gupta_thinning_algorithm_python/</loc>
+    <loc>https://example.org/post/nagendraprasad_wang_gupta_thinning_algorithm_python/</loc>
     <lastmod>2024-07-07T03:46:53+09:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/search/_index.en/</loc>
+    <loc>https://example.org/search/_index.en/</loc>
     <priority>0.1</priority>
   </url><url>
-    <loc>http://localhost:1313/search/_index.es/</loc>
+    <loc>https://example.org/search/_index.es/</loc>
     <priority>0.1</priority>
   </url><url>
-    <loc>http://localhost:1313/search/_index.fr/</loc>
+    <loc>https://example.org/search/_index.fr/</loc>
     <priority>0.1</priority>
   </url><url>
-    <loc>http://localhost:1313/search/_index.hi/</loc>
+    <loc>https://example.org/search/_index.hi/</loc>
     <priority>0.1</priority>
   </url><url>
-    <loc>http://localhost:1313/search/_index.jp/</loc>
+    <loc>https://example.org/search/_index.jp/</loc>
     <priority>0.1</priority>
   </url><url>
-    <loc>http://localhost:1313/search/</loc>
+    <loc>https://example.org/search/</loc>
     <priority>0.1</priority>
   </url><url>
-    <loc>http://localhost:1313/search/_index.pl/</loc>
+    <loc>https://example.org/search/_index.pl/</loc>
     <priority>0.1</priority>
   </url><url>
-    <loc>http://localhost:1313/search/_index.ru/</loc>
+    <loc>https://example.org/search/_index.ru/</loc>
     <priority>0.1</priority>
   </url><url>
-    <loc>http://localhost:1313/search/_index.zh-cn/</loc>
+    <loc>https://example.org/search/_index.zh-cn/</loc>
     <priority>0.1</priority>
   </url><url>
-    <loc>http://localhost:1313/series/</loc>
+    <loc>https://example.org/series/</loc>
   </url>
 </urlset>

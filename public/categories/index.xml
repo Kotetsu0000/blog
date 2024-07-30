@@ -2,25 +2,25 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on Kotetsu&#39;s tech blog</title>
-    <link>http://localhost:1313/categories/</link>
+    <link>https://example.org/categories/</link>
     <description>Recent content in Categories on Kotetsu&#39;s tech blog</description>
     <generator>Hugo</generator>
     <language>ja</language>
     <copyright>(c) 2024 Kotetsu0000</copyright>
     <lastBuildDate>Wed, 10 Jul 2024 11:07:27 +0900</lastBuildDate>
-    <atom:link href="http://localhost:1313/categories/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://example.org/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Image Processing</title>
-      <link>http://localhost:1313/categories/image-processing/</link>
+      <link>https://example.org/categories/image-processing/</link>
       <pubDate>Wed, 10 Jul 2024 11:07:27 +0900</pubDate>
-      <guid>http://localhost:1313/categories/image-processing/</guid>
+      <guid>https://example.org/categories/image-processing/</guid>
       <description></description>
     </item>
     <item>
       <title>Python</title>
-      <link>http://localhost:1313/categories/python/</link>
+      <link>https://example.org/categories/python/</link>
       <pubDate>Wed, 10 Jul 2024 11:07:27 +0900</pubDate>
-      <guid>http://localhost:1313/categories/python/</guid>
+      <guid>https://example.org/categories/python/</guid>
       <description></description>
     </item>
   </channel>
