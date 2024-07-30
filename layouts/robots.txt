@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: {{ "https://kotetsu0000.github.io/blog/sitemap.xml" | absURL }}
