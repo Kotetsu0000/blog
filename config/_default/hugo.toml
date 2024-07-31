@@ -1,5 +1,5 @@
 #baseURL = "https://example.com/"
-title = "Kotetsu's tech blog"
+title = "Kotetsu's blog"
 author = "Kotetsu0000"
 copyright = "(c) 2024 Kotetsu0000"
 paginate = 10
